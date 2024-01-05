@@ -7,11 +7,13 @@ from menus.profile_menu import *
 from database.db_control import DatabaseControl, DatabaseConnection
 from menus.main_menu import *
 from dotenv import load_dotenv
+import urllib.request
 import os
 from languages.lang_en import *
 from languages.lang_uz import *
 from languages.lang_rus import *
-
+BOT_TOKEN = "6857088134:AAF3eX3HFGrk1pfvk-980qwqsIPE3ULPXLA"
+# print(int(Message.from_user.id))
 
 # VARIABLES
 load_dotenv(".env")
@@ -78,6 +80,8 @@ async def photo(message: Message, state: FSMContext):
     else:
         async with state.proxy() as data:
             data["photo"] = message.photo[0].file_id
+        file_info = await message.bot.get_file(message.photo[0].file_id)
+        urllib.request.urlretrieve(f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}", f"C:/Users/Enjoy/Desktop/Original Bot/pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
         print(data["lang"])
         await message.answer(text=globals()[data["lang"][2:].lower()+"send_city"])
         await FSMRegister.next()
@@ -271,6 +275,9 @@ async def changes(message: Message):
 async def change_photo(message: Message, state: FSMContext):
     if message.content_type == "photo":
         DatabaseControl(_conn).change(column="photo", data=(message.photo[0].file_id,), chat_id=message.from_user.id)
+        file_info = await message.bot.get_file(message.photo[0].file_id)
+        urllib.request.urlretrieve(f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}",
+                                   f"C:/Users/Enjoy/Desktop/Original Bot/pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
         await forming(text=globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"changed_photo"], message=message, connection=_conn)
         await state.finish()
 

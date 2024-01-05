@@ -123,8 +123,10 @@ async def search(message: Message, state: FSMContext):
                 _base.set_mutual(liker=user["likes"][0][0], liked=message.from_user.id)
                 await bot.send_message(chat_id=user["likes"][0][0], reply_markup=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].upper()+"LIKE_MENU"],
                                        text=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].lower()+"send_interest"])
-
-                await mutual(user=user["likes"][0], chat_id=message.from_user.id)
+                try:
+                    await mutual(user=user["likes"][0], chat_id=message.from_user.id)
+                except:
+                    pass
                 await _storage.delete_position(chat_id=message.from_user.id, dictionary="likes")
             else:
                 print(message.from_user.id,'----',user["forms"][0][0])
@@ -184,7 +186,10 @@ async def search(message: Message, state: FSMContext):
             for i in user["mutual"]:
                 print('it is: ',i)
                 print('it is undername: ',user['mutual'][0][0])
-                await mutual(user=i, chat_id=message.from_user.id)
+                try:
+                    await mutual(user=i, chat_id=message.from_user.id)
+                except:
+                    pass
                 # _base.delete_sympathy(liked=message.from_user.id, liker=i[0])
             try:
                 await forming(user["forms"][0], message.from_user.id)
