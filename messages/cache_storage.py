@@ -1,5 +1,4 @@
 import json
-import asyncio
 
 
 class CacheStorage:
@@ -31,10 +30,3 @@ class CacheStorage:
             print(ex)
 
 
-# async def test():
-#     storage = CacheStorage()
-#     a = await storage.add(288, [123, 123, 123], [123, 123, 123], [123, 123, 123])
-#     return a
-#
-# if __name__ == '__main__':
-#     print(asyncio.get_event_loop().run_until_complete((test())))
