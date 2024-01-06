@@ -17,7 +17,7 @@ from languages.lang_rus import *
 
 
 load_dotenv()
-HOST, DATABASE, USER, PASSWORD = os.getenv("HOST"), os.getenv("DATABASE"), os.getenv("USER"), os.getenv("PASSWORD")
+HOST, DATABASE, USER, PASSWORD = "ec2-44-215-1-253.compute-1.amazonaws.com", "d6vqeidiqmhasj", "kgrsujqgrvajzu", "026a05bc82999473965cacc0ba33910eaa0566fc4cc46ba0cac6e7059241d627"
 
 
 _storage = CacheStorage()

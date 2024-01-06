@@ -4,8 +4,7 @@ import dotenv
 from aiogram import Dispatcher
 
 dotenv.load_dotenv(".env")
-ADMINS = [os.getenv("ADMIN")]
-
+ADMINS = ["147019723"]
 
 async def startup(dp: Dispatcher):
     for person in ADMINS:

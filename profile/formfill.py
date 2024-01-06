@@ -17,7 +17,7 @@ BOT_TOKEN = "6857088134:AAF3eX3HFGrk1pfvk-980qwqsIPE3ULPXLA"
 
 # VARIABLES
 load_dotenv(".env")
-HOST, DATABASE, USER, PASSWORD = os.getenv("HOST"), os.getenv("DATABASE"), os.getenv("USER"), os.getenv("PASSWORD")
+HOST, DATABASE, USER, PASSWORD = "ec2-44-215-1-253.compute-1.amazonaws.com", "d6vqeidiqmhasj", "kgrsujqgrvajzu", "026a05bc82999473965cacc0ba33910eaa0566fc4cc46ba0cac6e7059241d627"
 
 
 _conn = DatabaseConnection(host=HOST, database=DATABASE, user=USER, password=PASSWORD).connect()
@@ -81,7 +81,7 @@ async def photo(message: Message, state: FSMContext):
         async with state.proxy() as data:
             data["photo"] = message.photo[0].file_id
         file_info = await message.bot.get_file(message.photo[0].file_id)
-        urllib.request.urlretrieve(f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}", f"../pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
+        urllib.request.urlretrieve(f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}", f"./pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
         print(data["lang"])
         await message.answer(text=globals()[data["lang"][2:].lower()+"send_city"])
         await FSMRegister.next()
@@ -277,7 +277,7 @@ async def change_photo(message: Message, state: FSMContext):
         DatabaseControl(_conn).change(column="photo", data=(message.photo[0].file_id,), chat_id=message.from_user.id)
         file_info = await message.bot.get_file(message.photo[0].file_id)
         urllib.request.urlretrieve(f"https://api.telegram.org/file/bot{BOT_TOKEN}/{file_info.file_path}",
-                                   f"../pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
+                                   f"./pydatebot-main/Pictures/{message.photo[0].file_id}.jpg")
         await forming(text=globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"changed_photo"], message=message, connection=_conn)
         await state.finish()
 
