@@ -6,6 +6,7 @@ from aiogram import Dispatcher, Bot
 from aiogram.fsm.storage.memory import MemoryStorage
 
 
+
 cfg = load_dotenv(".env")
 
 
