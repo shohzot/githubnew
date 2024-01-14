@@ -23,14 +23,14 @@ async def start(message: Message):
 
     if user[1] == '🇺🇿Uzb':
         message_one = "Salom✋\nBu bot sizga yangi tanishuvlarda yordam beradi\nIltimos muloyim bo'ling boshqalar bilan👁"
-        animation = open("flame1.gif", "rb")
+        animation = open("/app/commands/flame1.gif", "rb")
         await bot.send_animation(caption=message_one,
                                  animation=animation,
                                  reply_markup=UZBMAIN_MENU,
                                  chat_id=message.from_user.id)
     elif user[1] == '🇷🇺Rus':
         message_one = "Привет✋\nЭтот бот поможет вам найти новых людей и отлично провести время.\nНе забывайте быть вежливыми с другими людьми👁"
-        animation = open("flame1.gif", "rb")
+        animation = open("/app/commands/flame1.gif", "rb")
         await bot.send_animation(caption=message_one,
                                  animation=animation,
                                  reply_markup=RUSMAIN_MENU,
@@ -38,7 +38,7 @@ async def start(message: Message):
     else:
         message_one = "Hi✋\nThis bot can help you find new people and awesome spend time\nDon't forget to be " \
                       "polite with other people👁"
-        animation = open("flame1.gif", "rb")
+        animation = open("/app/commands/flame1.gif", "rb")
         await bot.send_animation(caption=message_one,
                                  animation=animation,
                                  reply_markup=ENGMAIN_MENU,
@@ -50,7 +50,7 @@ async def start(message: Message):
 
 async def help_command(message: Message):
     message_one = "---> *t.me/Mr_Shokhzot* <---"
-    photo = open("creator1.jpg", "rb")
+    photo = open("/app/commands/creator1.jpg", "rb")
     await bot.send_photo(caption=message_one,
                          photo=photo,
                          reply_markup=ENGMAIN_MENU,
