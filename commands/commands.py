@@ -48,6 +48,7 @@ async def start(message: Message):
 
 
 
+
 async def help_command(message: Message):
     message_one = "---> *t.me/Mr_Shokhzot* <---"
     photo = open("/app/commands/creator1.jpg", "rb")
