@@ -2,7 +2,7 @@
 
 
 uzbsend_lang = "👇Iltimos tilni tanlang!"
-uzbsend_photo = "👇Iltimos rasmingizni yuboring, aks holda bot ishlamaydi!!!🚫"
+uzbsend_photo = "👇Iltimos suratingizni yuboring, aks holda bot ishlamaydi!!!🚫"
 uzbsend_city = "Iltimos, yashash joyingizni kiriting😊"
 uzbsend_realcity = "Iltimos haqiqiy shahar nomini kiriting😊"
 uzbsend_gender = "Endi jinsingizni kiriting😊"
