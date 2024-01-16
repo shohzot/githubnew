@@ -96,6 +96,18 @@ async def forming(user, chat_id):
                          chat_id=chat_id,
                          reply_markup=globals()[_base.get_user(int(chat_id))[1][2:].upper()+"SEARCH_MENU"])
 
+
+
+async def formingfrompath(user, chat_id):
+    print('it is for user')
+    print(user)
+    await bot.send_photo(caption=f'{user[5]}, {user[8]}\n🌐 {user[3]}\n\n〰️〰️〰️〰️〰️〰️〰️〰️\n"{user[7]}"\n〰️〰️〰️〰️〰️〰️〰️〰️',
+                         # photo=open(fr'/app/Pictures/{user[2]}.jpg', "rb"),
+                         photo=open(fr'/app/Pictures/{user[2]}.jpg', "rb"),
+                         chat_id=chat_id,
+                         reply_markup=globals()[_base.get_user(int(chat_id))[1][2:].upper()+"SEARCH_MENU"]
+    )
+
 async def mutual(user, chat_id):
     await bot.send_photo(caption=f'{user[5]}, {user[8]}\n🌐 {user[3]}\n'+globals()[_base.get_user(int(chat_id))[1][2:].lower()+"send_mutual"]+f'(tg://user?id={user[0]})💓\n\n〰️〰️〰️〰️〰️〰️〰️〰️\n"{user[7]}"\n〰️〰️〰️〰️〰️〰️〰️〰️',
                          parse_mode="Markdown",
@@ -121,8 +133,11 @@ async def search(message: Message, state: FSMContext):
             print(user["likes"] != [])
             if user["likes"] != []:
                 _base.set_mutual(liker=user["likes"][0][0], liked=message.from_user.id)
-                await bot.send_message(chat_id=user["likes"][0][0], reply_markup=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].upper()+"LIKE_MENU"],
-                                       text=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].lower()+"send_interest"])
+                try:
+                    await bot.send_message(chat_id=user["likes"][0][0], reply_markup=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].upper()+"LIKE_MENU"],
+                                           text=globals()[_base.get_user(int(user["likes"][0][0]))[1][2:].lower()+"send_interest"])
+                except:
+                    pass
                 try:
                     await mutual(user=user["likes"][0], chat_id=message.from_user.id)
                 except:
@@ -131,8 +146,11 @@ async def search(message: Message, state: FSMContext):
             else:
                 print(message.from_user.id,'----',user["forms"][0][0])
                 _base.like(liker=message.from_user.id, liked=user["forms"][0][0])
-                await bot.send_message(chat_id=user["forms"][0][0], reply_markup=globals()[_base.get_user(int(user["forms"][0][0]))[1][2:].upper()+"LIKE_MENU"],
-                                       text=globals()[_base.get_user(int(user["forms"][0][0]))[1][2:].lower()+"send_interest"])
+                try:
+                    await bot.send_message(chat_id=user["forms"][0][0], reply_markup=globals()[_base.get_user(int(user["forms"][0][0]))[1][2:].upper()+"LIKE_MENU"],
+                                           text=globals()[_base.get_user(int(user["forms"][0][0]))[1][2:].lower()+"send_interest"])
+                except:
+                    pass
                 await _storage.delete_position(chat_id=message.from_user.id, dictionary="forms")
                 print(user)
         else:
@@ -162,13 +180,22 @@ async def search(message: Message, state: FSMContext):
                 print(user["likes"][0])
                 await message.answer(text=globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_likedform"]+f'{user["likes"][0][5]}❤️')
                 print('cas of this function')
-                await forming(user["likes"][0], chat_id=message.from_user.id)
+                try:
+                    await forming(user["likes"][0], chat_id=message.from_user.id)
+                except:
+                    await formingfrompath(user["likes"][0], chat_id=message.from_user.id)
             else:
-                await forming(user["forms"][0], chat_id=message.from_user.id)
+                try:
+                    await forming(user["forms"][0], chat_id=message.from_user.id)
+                except:
+                    await formingfrompath(user["forms"][0], chat_id=message.from_user.id)
         except Exception as _ex:
-            await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
-            print('it came here')
-            await state.finish()
+            try:
+                await formingfrompath(user["forms"][0], message.from_user.id)
+            except:
+                await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
+                print('it came here')
+                await state.finish()
 
 
 ############################################################till  here
@@ -194,8 +221,11 @@ async def search(message: Message, state: FSMContext):
             try:
                 await forming(user["forms"][0], message.from_user.id)
             except:
-                await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
-                await state.finish()
+                try:
+                    await formingfrompath(user["forms"][0], message.from_user.id)
+                except:
+                    await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
+                    await state.finish()
             print('worked this part ')
         else:
             print(user["forms"])
@@ -206,9 +236,12 @@ async def search(message: Message, state: FSMContext):
                 try:
                     await forming(user["forms"][0], message.from_user.id)
                 except:
-                    await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
-                    print('it came here')
-                    await state.finish()
+                    try:
+                        await formingfrompath(user["forms"][0], message.from_user.id)
+                    except:
+                        await message.answer(globals()[_base.get_user(int(message.from_user.id))[1][2:].lower()+"send_unfor"], reply_markup=globals()[_base.get_user(int(message.from_user.id))[1][2:].upper()+"MAIN_MENU"])
+                        print('it came here')
+                        await state.finish()
 
 #################################
 
