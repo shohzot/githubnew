@@ -8,7 +8,7 @@ ADMINS = ["147019723"]
 
 async def startup(dp: Dispatcher):
     for person in ADMINS:
-        await bot.send_message(text="Bot started Successfully....", chat_id=person)
+        await bot.send_message(text="Bot started Successfully...", chat_id=person)
 
 
 async def shutdown(dp: Dispatcher):
